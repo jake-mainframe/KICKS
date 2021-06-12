@@ -1,0 +1,7 @@
+# KICKS Install
+/$CA
+$HASP000 OK;devinit 01c ../SOFTWARE/KICKS/kicks-tso-v1r5m0.xmi
+HHC02245I 0:001C device initialized;sh ./submit.sh ../SOFTWARE/KICKS/01_kicks_receive.jcl
+/ $HASP395 KICKXMIT ENDED;sh ./submit.sh ../SOFTWARE/KICKS/02_kicks_receive.jcl
+/ $HASP395 KICKREC2 ENDED;sh ./submit.sh ../SOFTWARE/KICKS/03_kicks_clist.jcl
+# Install complete

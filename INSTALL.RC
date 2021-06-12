@@ -1,0 +1,3 @@
+* Installing KICKS
+* Launching Automation REXX script
+exec ../automate.rexx ../SOFTWARE/KICKS/install.txt hercules.log -d &&
