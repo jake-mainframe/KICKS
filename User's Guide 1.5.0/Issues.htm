@@ -1,0 +1,454 @@
+
+<!--KICKS v1r5m0 issues list -->
+
+<h2><span style="font-style: italic"><font size="6">KICKS</font></span> 1.5.0
+Issues List</h2>
+<p><b>TSO rawhide published 9/3/2014<br>
+</b><br>
+generated 9/3/14, <span style="background-color: #FFFF00">open</span><br>
+<span style="background-color: #00FFFF">1</span>. noticed the READY READY issue
+in z/OS. This is a long standing issue but not one I have seen previously except
+in legacy MVS with the tcp=1$ driver. What happens is that, now and then, after the
+colored 'KICKS is shutting down' message is shown you don't get the TSO ready
+prompt. When you press enter again you get two READY prompts (usually white, not
+red in legacy MVS). This does not happen with tcp=2$ or with any CMS tcp...<br>
+- can't reliably make the problem appear, so difficult to tell if attempted
+fixes work...<br>
+- maybe due to leaving 'strange' stuff on the screen (such as the SA orders
+associated with the shutting down message when <i><b>KICKS</b></i> ends.<br>
+- fix? -9/3/2014 - changed KSSFPGM to do a clear screen after 2 second delay after
+sending the colored shutdown mesage - so that the screen TSO sees will be
+totally blank.<br>
+** not the problem, 'fix' had no effect, issue remains<br>
+- maybe due to not doing a read after colored letter write? Noted on z/OS that
+the colored letters where not showing up!<br>
+- fix? -9/25/14 - changed KSSFPGM to do a 'check' after colored letters write.<br>
+** 10/4/2014&nbsp; <u>nope, not fixed</u> - READY READY appeared again (in
+legacy MVS).<br>
+- more info --&nbsp; 2/16/2015 can now reliably generate issue (on legacy MVS).
+Generating procedure does not
+generate ready-ready on z/OS, but does display possibly related issue in that
+the KB is not locked after clear. Also noticed that I need to use QWS to test
+this, as vista tn3270 seems to have a bug this procedure exposes ('short read'
+for enter aid following clear aid). Also confirmed my &quot;expected&quot; result is
+correct by trying in real CICS, and confirmed that it works properly in all CMS
+versions of <i><b>KICKS</b></i> (and, within driver limitations, with tcp=2$ in
+legacy MVS). At this point I'm testing to see if ready-ready may
+be related to <i><b>KICKS</b></i> being called, not a command processor. <br>
+<br>
+reported 9/3/14, fixed 9/4/14<br>
+<span style="background-color: #00FFFF">2</span>. KEBRPGM does not compile in
+z/OS
+due to compile diagnostic complaining about kik-aids1 being moved to a pointer
+type.<br>
+- this due to LOAD api (for KEBRHELP) generating code for 'move after' from
+kik-aids1 used (off label) for entry/set to a pointer.<br>
+- fix: updated KIKPPCOB (and PPGCC) to use given arg directly.<br>
+- also, while I was at it, updated PPCOB, PPGCC, KIKPCP1$, and KEDF to separate
+SET/ENTRY (now reporting both) and to make all LOAD args optional.<br>
+<br>
+reported 9/3/14 - resolved 9/5/14 - not a problem<br>
+<span style="background-color: #00FFFF">3</span>. IEC161I 020-054 abend (re
+SDBDATA) in TSO when trying to use source trace. (this is z/OS system) also &quot;1st startbr failed, resp=84, resp2=50&quot; message in kedf<br>
+- this is an 'out of memory' situation. What's the region (below the line) for
+the TSO session?<br>
+- resolved - 2m region, <i><b>KICKS</b></i> doc says min 4m<br>
+<br>
+reported 9/4/14, fixed 9/4/14<br>
+<span style="background-color: #00FFFF">4</span>. GCC test program LINKTST fails
+due to 'testcob3' not abending!<br>
+- this due to testcob3 not detecting condition to do FCP access to file NOFILE,
+thus not abending. This due to PPGCC generating bad code in the case of an api
+call directly following an if (ie, no preceding '{'), When that occurred PPGCC
+gened a {linenum} {api expansion}, meaning the api expansion would not be within
+the if as intended.<br>
+- fix: updated PPGCC to add another set of brackets so it looks like {{linenum}
+{api expansion}}<br>
+- also, while I was at it, updated PPGCC to turn (8) error for missing KIKEIB in
+main routine def into warning (4).<br>
+<br>
+reported 9/6/14 <span style="background-color: #FFFF99">queued to 1.5.1 release</span><br>
+<span style="background-color: #00FFFF">5</span> Some GOLD and PRO markup still
+exists.<br>
+- 1.5.0 is a 'PRO' version, but since that's the only kind there is now the GOLD
+&amp; PRO markup, thou still recognized, should be removed and when finally gone
+PPCOB and PPGCC should have their recognition of it removed as well.<br>
+<br>
+<b>CMS rawhide published 9/7/2014<br>
+</b><br>
+generated 9/9/14, fixed 9/9/14<br>
+<span style="background-color: #00FFFF">6</span> KUNLKED vrm wrong, so stamped
+in vrm in KIKENTRY is wrong for anything using it Most everything really...<br>
+- this is not vrm that is checked, except by eyeball, so it's ok in the rawhide,
+but needs fixing before another publish<br>
+- KUNLKED updated, fix will propagate next ADOALL...<br>
+<br>
+<b>TSO, source, and CMS rawhides published 9/22/2014<br>
+</b><br>
+generated 9/23/14, closed 9/28/14, all items addressed<br>
+<span style="background-color: #00FFFF">7</span> z/OS source install issues<br>
+NOTE - z/OS is not a &quot;supported&quot; build platform for <i><b>KICKS</b></i>,
+but since some may want to casually play with the source on z/OS it seemed best to address
+these issues by fixing them when easy, and by otherwise documenting them...<br>
+- source install does not support update to JCLLIB for z/OS fixed 9/25/14<br>
+- ADOALL jobs run out of order due to multiple initiators serving class A jobs.
+Need to fix to run right, or run one at a time instead of using ADOALL.<br>
+- added notes to ADOALL fixed 9/25/14 <br>
+- FB2VB, PARMINFO, PDSUPDTE &amp; KIKALI do not compile various JCL issues<br>
+- parminfo - not using proc, using mvt COBOL compiler<br>
+not gonna fix, not used in z/OS closed 9/25/14<br>
+- pdsupdt$ - using ASMFCL proc, doesn't work in z/OS<br>
+not gonna fix, used only in install, closed 9/25/14<br>
+- fb2vb - fixed 9/24/14<br>
+- kikali<br>
+not really a 'source' issue, but exposed in source testing...<br>
+fixed 9/25/14<br>
+- MUR &amp; TAC examples do not compile<br>
+- these should compile from .CB2 lib, not from .COB lib<br>
+added notes to ADOALL &amp; KIKSAMP fixed 9/25/14<br>
+- ASRB (ASRA, AICA) routine does not compile. also SIP won't<br>
+link due to missing ASRB routine<br>
+- jcl issue<br>
+fixed 9/25/14<br>
+- COB glue routine does not compile.<br>
+- jcl issue<br>
+fixed 9/25/14 by making it like GCC glue<br>
+- KEDFPGM compile fails<br>
+not really a 'source' issue, but exposed in source testing...<br>
+- bad PPCOB code gen, LOAD api expansion exceeds col 71<br>
+- result of issue 2 fix??<br>
+fixed 9/25/14<br>
+- KSDBLOAD compile fails<br>
+not really a 'source' issue, but exposed in source testing...<br>
+- cob2 doesn't like redefining 01 levels under FD<br>
+fixed 9/25/14<br>
+<br>
+reported 9/23/14, fixed 9/25/14<br>
+<span style="background-color: #00FFFF">8</span> z/OS install does not fully
+support userid/prefix/literal HLQ due to missing support in the 2nd level rexx
+($$V1R5M0) in the xmi.<br>
+- rewrote rexx to provide arguments allowing HLQ to be overridden.<br>
+- while I was at it I also provided ability to override volser.<br>
+<br>
+reported 9/26/14, fixed 9/26/14<br>
+<span style="background-color: #00FFFF">9</span> license does not address
+concern re LE/370 in distros leaving legacy (legacy MVS, VM/370) systems behind.<br>
+- added restriction to license against incompatible objects<br>
+<br>
+reported 9/27/14, fixed 9/27/14<br>
+<span style="background-color: #00FFFF">10</span> running test programs as part
+of ADOALL in source install takes to long for no purpose.<br>
+- made the last ADOALL step (running tests) optional<br>
+<br>
+reported 9/27/14, fixed 9/27/14<br>
+<span style="background-color: #00FFFF">11</span> tempstor, intrapartition
+queues, and source db not defined during CMS install. This due to not running
+LOADSYS in POSTVSAM exec.<br>
+- added LOADSYS to POSTVSAM<br>
+<br>
+<b>TSO, source, and CMS rawhides published 9/28/2014</b></p>
+<p>reported 9/30/14, fixed 9/30/14<br>
+<span style="background-color: #00FFFF">12</span> KEDF lines shown as green in
+User's Guide are always blue...<br>
+- some tn3270 clients enable 3270 base color mode, some don't. Most don't allow
+a choice! This is not an issue normally, but KEDF screens are really busy and losing the
+color separation of its screen areas when using a tn3270 client that does enable
+base color mode is not helpful.<br>
+- added attribute set into DOTOP to force green</p>
+<p>last minute change! 10/2/14, fixed 10/12/14 <br>
+<span style="background-color: #00FFFF">13</span> TSO version needs KICKS...SKIKLOAD
+in addition to KICKSSYS...SKIKLOAD (like CMS version already has). This to simplify user table maintenance for
+&quot;system install&quot; versions of <i><b>KICKS</b></i>.<br>
+- updated both clist &amp; exec to create user libs if not already present, and to
+incorporate into appropriate concatenations.
+<p>reported 10/3/14, fixed 10/3/14<br>
+<span style="background-color: #00FFFF">14</span> ksgmlic fails on mod 3 terms.
+This due to incorrect map select (switched mod 3 &amp; mod 4).<br>
+- corrected map select code.</p>
+<p>reported 10/7/14, fixed 10/9/14<br>
+<span style="background-color: #00FFFF">15</span> source trace compiles failing
+IEC020I 001-4. compile proc(s) jcl issue, possible mismatch of blocksizes in
+concatenation.<br>
+- fixed source trace compile procs.</p>
+
+<p>reported 10/9/14, fixed 10/9/14<br>
+<span style="background-color: #00FFFF">16</span> source trace reporting source
+date non-match when should report source not found. &quot;i16&quot; (used in startbr
+call) was short but should be int.<br>
+- made i16 int instead of short</p>
+
+<p>reported 10/10/14, fixed 10/10/14<br>
+<span style="background-color: #00FFFF">17</span> 'funny' chars in KEBRPGM
+source code. Actually just a few &quot;[&quot; and &quot;]&quot; characters mistranslated (more ind$file mess ups) in a couple of comments, but fixed anyway...</p>
+<p>reported 10/10/14 - resolved 10/13/14 - not a problem (but maybe worth a
+comment in doc or KooKbooK someplace)<br>
+<span style="background-color: #00FFFF">18</span>. KEDF source trace PF4 &quot;skip
+subroutine&quot; did not return. <br>
+- skip subroutine returns when the program gets to the next executable instruction,
+but that may not
+be the same as the next instruction the program executes! For example, consider</p>
+<blockquote>
+	IF blah blah THEN<br>
+	&nbsp;&nbsp;
+	PERFORM SKIP-THIS<br>
+    ELSE<br>
+	&nbsp;&nbsp;
+	PERFORM MARKS-THIS-AS-RETURN.<br>
+	PERFORM EXPECTED-RETURN-HERE.
+</blockquote>
+<p>if you were at &quot;PERFORM SKIP-THIS&quot; and pressed PF4 you might expect to return
+to &quot;PERFORM EXPECTED-RETURN-HERE&quot;, but KEDF sets up the temporary
+breakpoint at &quot;PERFORM MARKS-THIS-AS-RETURN&quot;, which is not hit so no &quot;return&quot; is
+apparent.<br>
+- working as designed!<br>
+- <i>possible enhancement: PF16 (shift PF4) to do &quot;set temp BP at current
+location (or
+cursor) and go&quot;</i>.</p>
+
+<p>reported 10/16/14, fixed 10/17/2014<br>
+<span style="background-color: #00FFFF">19</span> when using source trace, and
+no source is found, and a resp&lt;&gt;0 event occurs, the resp is not shown,
+which is confusing since the only reason for the break is the bad resp! This due
+to not calling api_resp before dobottom in those error cases in source_trace.<br>
+- added required api_resp calls.</p>
+
+<p>generated 10/20/14, <span style="background-color: #FFFF00">open</span><br>
+<span style="background-color: #00FFFF">20</span> this is to document some
+'rough edges' in the KEBR program..<br>
+- analyze-cursor sometime reports wrong when cursor on &quot;**bottom**&quot; or bottom
+ruler line of hex display<br>
+- repeated find sometimes does not switch directions properly<br>
+- need KooKbooK recipe for CICS install&nbsp; &#10003;(see issue 27)<br>
+- online help could be improved to show *all* commands instead of just those new
+or different from CEBR; also vget should note the vsam file name is as in the
+FCT (ie, its DDN), not as in its DSN.<br>
+- 'checksum' partially implemented to detect queue changed since last displayed;
+needs to be finished...<br>
+- find highlight could be improved. 'scroll to' highlighting a bit confusing<br>
+
+<p>reported 10/20/14, fixed 10/23/2014<br>
+<span style="background-color: #00FFFF">21</span> KEBR does not find short tdq/file
+names in get/vget if an optional argument is present<br>
+- changed to move only up to first space to tdq/file name</p>
+
+<p>reported 10/23/14, resolved 10/23/14 - not a problem<br>
+<span style="background-color: #00FFFF">22</span> some dates in the issues list
+are beyond the
+&quot;last updated date&quot; at the bottom of the page<br>- &quot;Last updated date&quot;
+refers to the Appendices document, but the issues list is a server side include
+and can change without the Appendices document changing. Added 'issues last
+updated' to bottom of the include...<br>
+
+<p>feature request 10/30/14, request declined 11/11/14<br>
+<span style="background-color: #00FFFF">24</span> show &quot;source listing not found&quot;
+message only once per program per task instead of for every source statement.<br>
+- really only an issue for a program that was compiled with source trace, but
+the source code database has since been reinitialized so the source is no longer
+available. Options: recompile (with or without source trace), switch to API mode
+(PF2), or just turn off
+source trace (PF13).<br>
+- 4/22/16 - changed 'SOURCE LISTING NOT FOUND' msg suffixing ', PRESS PF2 FOR API MODE'.<br>
+
+<p>
+<b>TSO, source, and CMS final (?) published 11/7/2014</b></p>
+
+
+
+
+<p>reported 11/9/14, resolved 11/9/14 - ** unpublished **<br>
+<span style="background-color: #00FFFF">25</span> On TK4- system, where <i><b>
+KICKS</b></i> &quot;system install&quot; done, tso source build ADOALL step ADO11 submitted jobs (LOADMUR, LOADTAC, LOADSDB, LOADTEMP, LOADINTR) fail due to RAKF issue, unable to delete vsam file(s).<br>
+- cause is that specific RAKF rules exist for these (system install use) files, and the default id
+associated with intrdr job isn't allowed to delete. Maybe not a big deal, since
+this step isn't actually necessary to the build; the files are already built in
+the course of the normal <i><b>KICKS</b></i> install.<br>
+- solution: delete step 11 since it is not necessary anyway<br>
+<p>observed 11/16/14, resolved 11/19/14 - ** unpublished **<br>
+<span style="background-color: #00FFFF">26</span> Syncpoint exit may foul up
+pseudo conversational tasks. Fixing this turned out to be one of those efforts
+that kept turning up mostly unrelated minor issues that also got fixed along the
+way, as noted.<br>
+- fixed KCP code calling exit to preserve calen &amp; nextran<br>
+- also noted and fixed related issue in PCP setting nextran<br>
+- also noted and fixed tempstor &amp; intrapartition queue 'empty startup' problem<br>
+- also upgraded SIP auxtrace to show more decoded trace entries<br>
+</p>
+
+<p>published 11/21/14<br>
+<span style="background-color: #00FFFF">27</span> KooKbooK recipe 15, &quot;Installing KEBR in real CICS&quot;<br>
+</p>
+<p>generated 11/22/14 <span style="background-color: #FFFF00">open</span><br>
+<span style="background-color: #00FFFF">28</span> status of KooKbooK updates (1-14)<br>
+- 1 - Designing and implementing simple BMS maps<b> - </b>republished 11/19/2014<br>
+- 2 - Designing and implementing simple KICKS COBOL programs<b> - </b>
+republished 11/21/2014<br>
+- 3 - Designing and implementing simple KICKS COBOL programs, part II<b> - </b>republished 11/22/2014<br>
+- 4 - Run Away Task!<b> - </b>republished 11/23/2014<br>
+- 5 - Designing and implementing simple
+<span style="font-size: 12pt; line-height: 115%">KICKS COBOL programs, part III<b>
+- </b></span>republished 12/06/2014<br>
+- 6 - 251 project – Scripting 3270 apps with open source tools ( I )<b> - </b>
+<span style="font-size: 12pt; line-height: 115%"><b>
+&nbsp;</b></span>republished 12/30/2014<br>
+- 7 - 251 project – Scripting 3270 apps with open source tools ( II )<b> - </b>&nbsp;republished
+1/16/2015<br>
+- 8 - 251 project – Resource Definition ( I )<b> - </b>&nbsp;republished
+1/17/2015<br>
+- 9 - 251 project – Resource Definition ( II )<b> - </b>&nbsp;republished
+1/18/2015<br>
+- 10 - 251 project – Workload &amp; Final Project Wrap Up<b> - </b>&nbsp;republished
+1/19/2015<br>
+- 11 - Designing and implementing simple KICKS GCCMVS programs<b> - </b>&nbsp;republished
+2/3/2015<br>
+- 12 - Using Alternate 3270 screen sizes in COBOL and GCCMVS programs<b> -&nbsp; </b>republished
+11/23/2015<br>
+- 13 - Using DB2 with KICKS (reformat only,<span style="background-color: #FFFF99"> content update</span><b><span style="background-color: #FFFF99">
+</span> </b><span style="background-color: #FFFF99">queued to
+1.5.1 release</span>) - <br>
+- 14 - VSAM in the&nbsp;VM/370
+SixPack (1.2) system<b> -&nbsp; </b>
+</p>
+
+<p>pending change 11/22/14 <span style="background-color: #FFFF99">queued to
+1.5.1 release</span><br>
+<span style="background-color: #00FFFF">29</span> improve tempstor, intra queue
+sharing<br>
+&nbsp;&nbsp;&nbsp;&nbsp; a. change FCP close so that, in CMS, rel/det happens after last open file is closed<br>
+&nbsp;&nbsp;&nbsp;&nbsp; b. close tempstor, intra on conversational read even if pct entry says files stay open<br>
+</p>
+
+<p>reported 11/26/14 <span style="background-color: #FFFF00">open</span><br>
+<span style="background-color: #00FFFF">30</span> PDSman.xls does not handle
+member aliases. This utility is not distributed with <i><b>KICKS</b></i>, but it
+is something I've posted to the <i><b>KICKS </b></i>web site so I will
+fix this sooner or later. Since no <i><b>KICKS </b></i>distribution datasets
+contain aliases it's not a high priority...</p>
+
+<p>feature request 11/30/14 <span style="background-color: #FFFF99">queued to
+1.5.1 release</span><br>
+<span style="background-color: #00FFFF">31</span> Claim is <i><b>KICKS</b></i> already
+'does' IRC, it just doesn't name it. This request is to support, for
+compatibility, specification of SYSID in api calls. Such calls would be
+execution time comments, but since files/queues are (or can be) shared, the
+result is the same as if 'real' IRC was happening. Request prompted by desire to
+add IRC to KEBR for use in real CICS.<br>
+- looks like a good idea, may need further research and definition<br>
+
+<p>pending change 12/16/14 <span style="background-color: #FFFF99">queued to
+1.5.1 release</span><br>
+<span style="background-color: #00FFFF">32</span> improve trace, auxtrace &amp; kedf
+trace by adding eibline &amp; eibprog to each trace entry (internal entry size will
+go from 16 to 32). This may also allow backward lookup (how you got here) at a
+source trace breakpoint...<br>
+
+<p>pending change 12/31/14 <span style="background-color: #FFFF00">open</span><br>
+<span style="background-color: #00FFFF">33</span> update User's Guide Install
+section for TK4- update 6, 7.<br>
+- also do more clean up of the whole install section...
+
+<p>observed 1/5/15, resolved 1/6/15 - ** unpublished **<br>
+<span style="background-color: #00FFFF">34</span> noticed that VRM checking
+apparently systematically (but accidentally!) removed from the suffixed
+management modules, needs to get put back...</p>
+
+
+
+
+<p>observed 2/6/15, fixed 8/8/2015 - ** unpublished **<br>
+<span style="background-color: #00FFFF">35</span> directly returning current
+comm-area does not work. Usual code is to move it to working storage, change in
+working storage as needed, then return the working storage copy. But fails if
+RETURN TRANSID(EIBTRNID) COMMAREA(INPUT-COMM) LENGTH(EIBCALEN)<br>
+- because INPUT-COMM is cleared before it's moved to itself...<br>
+- changed to clear remaining after move...</p>
+
+
+
+
+<p>reported 2/6/15, resolved 2/10/15 - ** unpublished **<br>
+<span style="background-color: #00FFFF">36</span> use of SYSALLDA in legacy MVS
+install procedures causes install job failures when the allocation
+occurs onto a pack without sufficient space. <br>
+- changed GETXMI &amp; RCVKICKS (install instructions) and V1R5M0 (in BIGPDS
+install library) jcl to
+specify SYSDA instead of SYSALLDA.
+</p>
+
+
+
+
+
+<p>last minute change! 2/15/15&nbsp; - ** unpublished **<br>
+<span style="background-color: #00FFFF">37</span> While working on&nbsp; issue
+#1 (ready-ready) I made a temporary change to ACP to un-suppress normally
+suppressed transaction dumps when intense tracing is active. Having decided this
+is a worthwhile change I've decided to make it permanent.
+
+
+
+
+
+<p>last minute change! 5/8/15&nbsp; - ** unpublished **<br>
+<span style="background-color: #00FFFF">38</span> Minor license revision; Under
+USE, authorized users to &quot;agree to&quot; as well as &quot;not violate&quot; terms.<p>
+reported 5/13/15,&nbsp; fixed 8/7/15 - ** unpublished **<br>
+<span style="background-color: #00FFFF">39</span> screen shots in 'examples'
+part of user's guide missing.<p>generated 5/17/15 <span style="background-color: #FFFF00">open</span>&nbsp; <br>
+<span style="background-color: #00FFFF">40</span> TS QUEUE and QNAME arguments
+(for DELETEQ, READQ, WRITEQ) need additional clarification in their API
+description to state QUEUE expects 8 characters of name, and QNAME expects 16
+characters of name. Either will be right padded with spaces to make 16
+characters. Names in the queue itself are always 16 characters..</p><p>
+reported 12/18/15,&nbsp; fixed 12/18/15 - ** unpublished **<br>
+<span style="background-color: #00FFFF">41</span> Install fails with &quot;IKJ56221I
+VOLUME ...&quot; message trying to install KICKS (or KICKS source) onto specific
+volume in z/os.<br>
+- happens when&nbsp;volume specified isn't part of the default volume group.
+Fixed by adding 'UNIT(SYSALLDA)' to allocation in $$V1R5M0 rexx.<p>
+reported 5/4/16,&nbsp; fixed 6/26/16<br>
+<span style="background-color: #00FFFF">42</span> license does not address
+transfer.<br>
+- added 'non-transferable' to free license grant.<p>
+reported 5/14/16,&nbsp; fixed 6/26/16 - ** unpublished **<br>
+<span style="background-color: #00FFFF">43</span> Cobol preprocessor with source
+trace option generates bad code when using as a pre step for a DB2 program.<br>
+- 'exec sql' block must not have trace statements inserted!<p>
+feature request 7/1/16 <span style="background-color: #FFFF99">queued to
+1.5.1 release</span><br>
+<span style="background-color: #00FFFF">44</span> Would be helpful if SPOOLOPEN
+supported nocc/asa/mcc options for carriage control..<br>
+- nocc is what it's doing now, but some 'printables' (like KEBR help) have asa
+control.<br>
+
+- looks like a good idea, may need further research and definition (re
+additional options beyond those mentioned)<p>
+reported 8/14/16,&nbsp; fixed 8/20/16 - ** unpublished **<br>
+<span style="background-color: #00FFFF">45</span> Compiling for 'no KEDF' does
+not work in TSO, program still traps into KEDF when it's turned on.&nbsp; Works
+in CMS.<br>
+- fix for issue 7 introduced new bug KIKCOBGX same as KIKCOBGL! Replaced 'undef
+DOEDF' for KIKCOBGX compile (like in CMS).
+<br>
+- added 'with source trace' to KEDFPGM 'on/s' response while fixing this.<p>
+reported 3/21/17 <span style="background-color: #FFFF00">open</span>&nbsp; <br>
+<span style="background-color: #00FFFF">46</span> CONDITION(s) in HANDLE
+CONDITION (etal) should be documented in Users Guide, rather than just saying
+they are the same as DFHRESP (which is itself undocumented in Users Guide).<br>
+
+<p>
+feature request 4/1/17 <span style="background-color: #FFFF99">queued to
+1.5.1 release (or later)</span><br>
+<span style="background-color: #00FFFF">47</span> Would be helpful if RETURN
+TRANSID
+supported IMMEDIATE option..<br>
+- helpful in a db2 environment.<br>
+
+- might be a good idea, needs further research, especially wrt INPUTMSG.
+
+<p>
+reported 7/30/17 <span style="background-color: #FFFF00">open</span>&nbsp; <br>
+<span style="background-color: #00FFFF">48</span> 0C1 abend in batch KICKS 
+following install of v8 TK4-.<br>
+- circumvention: add LDMOD S37X to tk4-.cnf to restore 37x opcodes...<br>
+- long term: need to change the way KICKS detects 31 bit capable/zos...<p>
+<font size="2">issues last updated 11/23/2019</font></p>

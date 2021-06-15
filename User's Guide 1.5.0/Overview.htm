@@ -1,0 +1,162 @@
+<html>
+
+<head>
+<title>KICKS User's Guide - Overview</title>
+<base target="_self">
+
+<script language="javascript">
+if(self.location==top.location)self.location="index.html?overview.htm";
+</script>
+
+</head>
+
+<BODY>
+
+<!--This is a comment. Comments are not displayed in the browser-->
+
+<table border="0" cellpadding="0" style="border-collapse: collapse" width="100%" height="72">
+	<tr>
+		<td width="141" valign="top"><i><b><font size="7">KICKS</font></b></i></td>
+		<td valign="bottom">
+		<p align="right"><font size="6"><span style="font-weight: 400">A
+		transaction processing system for </span></font>
+		<font size="7" color="#FF0000"><span style="font-weight: 700">CMS</span></font><font size="6"><span style="font-weight: 400"> &amp; </span></font><font color="#FF0000" size="7">
+		<span style="font-weight: 700">TSO</span></font></td>
+	</tr>
+</table>
+
+<h2>Overview</h2>
+<p><i><font size="5">KICKS</font></i><font size="4"> is an enhancement
+for CMS &amp; TSO that lets you run your CICS applications directly instead of having to
+'install' those apps in CICS. You don't even need CICS itself installed
+on your machine.</font></p>
+<p><i><b>KICKS</b></i> provides a high level of source code compatibility with CICS
+so you can move an application either way between CICS and <i><b>KICKS</b></i>
+simply by recompiling. Whether for ease of testing, fast deployment to small
+groups of your users, or simple &quot;guerrilla marketing&quot;, join your colleagues
+using <b><i>KICKS</i></b> to speed up their development.</p>
+<p>Being TSO/CMS based, <i><b>KICKS</b></i> can't support the many thousands of
+users a multi-user system like CICS can. But if <i>
+<b>KICKS</b></i> can't support thousands of users, it can certainly support a
+few hundred of your users, and if having separate address spaces means it can't run as many users it also means
+your users aren't so tied to each other's fates - one crash
+does not kill all. This reduced consequence of failure often means your new
+application's &quot;Time to Market&quot; can be dramatically shortened.</p>
+<p>Like CICS, <i><b>KICKS</b></i> supports file sharing among its users. Hundreds of TSO
+or CMS users share
+db2 tables or VSAM files
+with no more concern about doing so than CICS users - and since <i><b>KICKS</b></i>
+VSAM support is also available in batch there's usually no need to &quot;close&quot; <i>
+<b>KICKS</b></i> VSAM files just so such batch jobs can access them.</p>
+<p>Unlike CICS, <i><b>KICKS</b></i> requires no special systems or security
+services and can be
+easily installed and used by a single applications programmer with a TSO or CMS account.
+</p>
+<h2><a name="VRM"></a>Version/Release encoding (VRM) </h2>
+<p><i><b>KICKS</b></i> modification levels are encoded in a
+Version/Release/Modification format. So for example its TSO distribution datasets
+for this release are named as USERID.KICKS.V1R5M0.XXX, signifying version 1, release
+5,
+modification 0 (aka 1.5.0).</p>
+<p>Since <i><b>KICKS</b></i> is highly modular, with separate nucleus management modules and
+tables as well as components compiled and linked with user applications, <i><b>KICKS</b></i>
+performs extensive version checking to ensure all components are compatible.
+Eventually that will allow a newer release of <i><b>KICKS</b></i> to tolerate older
+applications and maps, perhaps even older tables or even older
+management modules in some cases. But for now the version checking is very
+rigid: All components, including user applications and maps, must be at exactly
+the same level. This means <u>you will have to recompile all your applications with
+each new <i><b>KICKS</b></i> distribution</u>. The symptom of a version mismatch in your
+application is a <b>VERS</b> abend (or similar, such as VER1, VER2, etc). </p>
+<h2><a name="ReleaseHistory"></a>Highlights of release history </h2>
+<p>1.5.0</p>
+<ul>
+	<li>Retired commercial <b><i>KICKS</i></b> and integrated its features into 
+	the free version,
+	including<ul>
+	<li>Support for large screens (up to 62x160) via 14 bit sba's.</li>
+	<li>Support for OCCURS in BMS maps.</li>
+	<li>Shared intrapartition transient data queues.</li>
+	<li>Shared temporary storage queues.</li>
+	<li>Improved DB2 compatibility using SYNCPOINT exit to automatically drive
+	database COMMIT/ROLLBACK.</li>
+	<li>Enhanced application error recovery with HANDLE ABEND.</li>
+</ul></li>
+	<li>Enhanced application debugging with COBOL and GCC source code trace /
+	breakpoint in KEDF.</li>
+	<li>Release of full source code.</li>
+</ul>
+<p>1.4.1 (aka 'Golden' version)</p>
+<blockquote>
+	<p>Added keyboard locking.</p>
+</blockquote>
+<p>1.4.0</p>
+<blockquote>
+	<p>Ported <i><b>KICKS</b></i> to VM/CMS.</p>
+</blockquote>
+<p>What happened to the releases between 1.1.3 and 1.4.0 ?&nbsp; They never
+existed. While in development of 1.1.4 we decided VRM was off track. 1.1.2 and 1.1.3 really should have been
+1.2.0 and 1.3.0. We fixed it by changing VRM for the new release from 1.1.4 to
+1.4.0.</p>
+<p>1.1.3</p>
+<blockquote>
+	<p>Added fielded input for sequential terminal (aka CRLP). Added support for 
+	localization.</p>
+</blockquote>
+<p>1.1.2</p>
+<blockquote>
+	<p>Added ENQ, DEQ, GETMAIN, and FREEMAIN api's and added NOHANDLE 
+	support for all api's.</p>
+</blockquote>
+<p>1.1.1</p>
+<blockquote>
+	<p>Added support for coding <i><b>KICKS</b></i> COBOL applications using LE COBOL 
+	on z/OS, and C applications using GCCMVS.</p>
+</blockquote>
+<p>1.1.0</p>
+<blockquote>
+	<p>Added KEDF debugger, extrapartition transient data &amp; printing. Improved screen compatibility with CICS. 
+	Added preprocessor support for modern 
+	COPY syntax in the legacy COBOL compiler.</p>
+</blockquote>
+<p>1.0.0 </p>
+<blockquote>
+	<p>The first real release of <i><b>KICKS</b></i>, implementing enough of the full CICS api that useful applications could be developed and run, and many existing
+CICS applications could be ported to <i><b>KICKS</b></i>. </p>
+</blockquote>
+<p>0.9.0 </p>
+<blockquote>
+	<p>An alpha distribution of <i><b>KICKS</b></i>. It initially lacked an MVS based
+BMS map generator; a PC based Perl script had to be used to generate maps and
+the resulting output upload to MVS for final processing. </p>
+</blockquote>
+<h2><a name="Goals"></a>Goals for the next release / level-set.</h2>
+<ul>
+	<li>The 1.5.1 release (mid 2015?) is primarily for 'z' users and will provide support for 31 
+	bit applications and feature a preprocessor for IBM C and <b><i>KICKS</i></b> 
+	build using that compiler.</li>
+	<li>Some features of future releases may include 'trigger' queue processing, 
+	IC (interval control), Journaling &amp; DTB (dynamic transaction backout), 
+	dynamic table update (like CEDA), and a command
+	level interpreter (like CECI).</li>
+</ul>
+
+<h2><a name="MaintenanceSupport"></a>Maintenance/support plan for this release
+</h2>
+<p>1.5.0 requires that all user programs and maps be recompiled. </p>
+<p><i><b>KICKS</b></i> has been tested been tested with z/OS thru 1.12 and with
+the MVS38J&nbsp; &quot;Tur(n)key&quot; system including the base TK3 (the one on the CD) as
+well as with TK3UPT, MVS380 and TK4-. It greatly benefits from the VTAM fixes and dynamic proclib support in
+the newer TK3 versions, but does not require them. </p>
+<p><i><b>KICKS</b></i> has been tested with z/VM thru 6.x and with
+the VM/370 &quot;Six Pack&quot; system. Its usability with z/VM is limited by lack of
+VSAM support on most z/VM systems.</p>
+<p>User self help is available on the <i>kicksfortso</i> yahoo forum at<a target="_blank" href="https://groups.yahoo.com/neo/groups/kicksfortso/info">
+https://groups.yahoo.com/neo/groups/kicksfortso/info</a></p>
+<p>Paid support is also available, for more information please contact me at
+<a target="_blank" href="http://www.kicksfortso.com/same/kicks-contact.htm">http://www.kicksfortso.com/same/kicks-contact.htm</a></p>
+<hr>
+
+<font size="3">Copyright <font face="Times New Roman">© Mike Noel, 2008-2015;
+</font></font>last updated 2/6/2015
+</body></html>
