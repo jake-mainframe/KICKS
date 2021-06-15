@@ -1,0 +1,868 @@
+<html>
+
+<head>
+<title>KICKS User's Guide - Appendices</title>
+<base target="_self">
+
+<script language="javascript">
+if(self.location==top.location)self.location="index.html?Appendices.htm";
+</script>
+
+</head>
+
+<BODY>
+
+<!--This is a comment. Comments are not displayed in the browser-->
+
+<table border="0" cellpadding="0" style="border-collapse: collapse" width="100%" height="72">
+	<tr>
+		<td width="141" valign="top"><i><b><font size="7">KICKS</font></b></i></td>
+		<td valign="bottom">
+		<p align="right"><font size="6"><span style="font-weight: 400">A
+		transaction processing system for </span></font>
+		<font size="7" color="#FF0000"><span style="font-weight: 700">CMS</span></font><font size="6"><span style="font-weight: 400"> &amp; </span></font><font color="#FF0000" size="7">
+		<span style="font-weight: 700">TSO</span></font></td>
+	</tr>
+</table>
+
+<h2>Appendix A – TSO (or CMS) versus CICS versus KICKS</h2>
+<p>Paraphrasing Wikipedia’s TSO entry (<a target="_blank" href="http://en.wikipedia.org/wiki/Time_Sharing_Option">http://en.wikipedia.org/wiki/Time_Sharing_Option</a>),</p>
+<blockquote>
+	<p><i>The Time Sharing Option (TSO) is an interactive time-sharing
+	environment for IBM mainframe operating systems running from OS/MVT through
+	MVS and OS/390 to the current z/OS. &quot;Time-sharing&quot; means that many persons
+	can access MVS concurrently but each is unaware that the operating system is
+	being accessed by others - so it appears to each TSO user that he or she is
+	the only user on the system. TSO is most commonly used by mainframe system
+	administrators and programmers because it provides: a text editor; the
+	ability to submit batch jobs, be notified of their completion and view the
+	results without waiting for printed reports; debuggers for some of the
+	programming languages used on System/360 and later IBM mainframes; other
+	vendors' end-user applications, for example for querying IMS and DB2
+	databases. The name &quot;Time Sharing Option&quot; derives from the fact that, when
+	it was originally introduced in the 1960s, time-sharing was considered an
+	&quot;optional feature&quot;, as compared to standard batch processing, and hence TSO
+	was offered as an optional feature of OS/MVT. It became a standard part of
+	MVS in 1974. TSO interacts with users in either a line-by-line mode or in a
+	full screen, menu-driven mode. In the line-by-line mode, the user enters
+	commands by typing them in at the keyboard; in turn, the system interprets
+	the commands, and then displays responses on the terminal screen. TSO
+	commands can be embedded in clists which can be run either interactively or
+	in batch. </i></p>
+</blockquote>
+<p>Paraphrasing Wikipedia’s CICS entry (<a target="_blank" href="http://en.wikipedia.org/wiki/CICS">http://en.wikipedia.org/wiki/CICS</a>),</p>
+<blockquote>
+	<p><i>CICS (Customer Information Control System) is a transaction server
+	that runs primarily on IBM mainframe systems. It is a transaction manager
+	designed for rapid, high-volume online processing. This processing is mostly
+	interactive (screen-oriented), but background transactions are possible.
+	While CICS has its highest profile among financial institutions such as
+	banks and insurance companies, over 90 percent of Fortune 500 companies are
+	reported to rely on CICS for their core business function], along with many
+	government entities. CICS is used in bank-teller applications, ATM systems,
+	industrial production control systems, insurance applications, and many
+	other types of interactive applications. A CICS transaction is a set of
+	operations which together perform a task. Usually, the majority of
+	transactions are relatively simple tasks such as requesting an inventory
+	list or entering a debit or credit to an account. A primary characteristic
+	of a transaction is that it should be atomic. On large mainframes CICS
+	easily supports thousands of transactions per second, making it a mainstay
+	of enterprise computing. Each CICS program is initiated using a transaction
+	identifier. CICS screens are sent as a construct called a map, a little
+	program created with BMS (Basic Mapping Support) assembler macros. The end
+	user inputs data, which is made accessible to the program by receiving a map
+	from CICS. </i></p>
+	<p><i>The first release of the CICS Program Product developed by IBM became
+	available on July 8, 1969. CICS was originally developed in the United
+	States at an IBM Development Center in Des Plaines, Illinois, beginning in
+	1966. Since 1974 CICS development has been at IBM's Hursley, United Kingdom
+	Laboratory. When CICS was first released, it supported programs written in
+	IBM Assembler, PL/I and COBOL. Programs needed to be quasi-reentrant in
+	order to support multiple concurrent transaction threads. CICS services
+	emulated the functions of the operating system, but provided services
+	tailored to support only transaction processing that were more efficient
+	than the generalized services in the operating system and much simpler for
+	programmers to use, particularly with respect to communication with terminal
+	devices. CICS owes its early popularity to its relatively efficient
+	implementation, its multi-threaded processing architecture, and its relative
+	simplicity for developing terminal based applications. Today CICS has
+	millions of applications worldwide that have been executing reliably for
+	decades.</i></p>
+</blockquote>
+<p>And paraphrasing the TSO TIMES (see
+<a target="_blank" href="http://www.tsotimes.com/articles/archive/fall03/historyoftsopart2.html">
+http://www.tsotimes.com/articles/archive/fall03/historyoftsopart2.html</a>),</p>
+<blockquote>
+	<p><i>The most descriptive word for TSO is conversational. Conversational,
+	in a shared computing context, means that each TSO user logged on to MVS has
+	their own address space. The hallmark of a conversational environment is the
+	long term holding of what could be a shared resource. That is, a resource
+	(file, memory, source member) is held onto as long as a user is using it.
+	The term for this is think time. Something like editing a program (which can
+	take many hours of think time) would be a good example of a conversational
+	task. For the entire time that a TSO user is editing a file, an exclusive
+	lock is maintained on the file being edited. No one else can edit the same
+	file while the original TSO user edits it. </i></p>
+	<p><i>To underscore the conversational nature of TSO sessions, compare TSO
+	to CICS which is said to be pseudo-conversational. In the simplest sense,
+	the difference can be seen in the following graphics.</i></p>
+</blockquote>
+<p align="center">
+<img border="0" src="other-graphics/tsoessayfig1.gif" width="248" height="276"></p>
+<blockquote>
+	<blockquote>
+		<blockquote>
+			<blockquote>
+				<blockquote>
+					<p style="margin-bottom: 0"><b><font size="2">The
+					Conversational TSO teleprocessing model</font></b></p>
+					<p style="margin-top: 0"><font size="2">TSO requires a
+					server address space called the TCAS (Terminal Controlling
+					Address Space). TCAS constantly polls its chain of attached
+					TSO address spaces looking for input. When a TSO user is not
+					pressing Enter (or another AID key), the operating system
+					&quot;swaps out&quot; that TSO address space. This conserves some
+					resources but still each TSO user requires significant
+					operating system servicing.</font></p>
+				</blockquote>
+			</blockquote>
+		</blockquote>
+	</blockquote>
+</blockquote>
+<p align="center">
+<img border="0" src="other-graphics/tsoessayfig2.gif"></p>
+<blockquote>
+	<blockquote>
+		<blockquote>
+			<blockquote>
+				<blockquote>
+					<p style="margin-bottom: 0"><b><font size="2">The
+					Pseudo-Conversational CICS teleprocessing model</font></b></p>
+					<p style="margin-top: 0"><font size="2">CICS has a single
+					address space (commonly called a &quot;CICS region&quot;) with a large
+					number of terminals connected to it. It is a task-based
+					model in that when a user initiates some work, a pre-defined
+					task is run to display data on the user's terminal screen
+					and sometimes the displayed data is updated. However during
+					the time that occurs between the initial request to view
+					data and the eventual update of the data, no locks are held
+					(unless explicitly programmed) and other terminal users are
+					free to inquire against the same data. What this means is
+					that during the potentially long think time period, the CICS
+					user is not holding on to data resources as a TSO user would
+					be. This is called a pseudo-conversational task-based
+					environment.</font></p>
+				</blockquote>
+			</blockquote>
+		</blockquote>
+	</blockquote>
+	<p><i>With CICS, all terminals sign-on to a single address space. The CICS
+	software manages this multi-tasking, concurrent terminal access by using a
+	standard api. This is a one-to-many relationship: One CICS region (address
+	space), many users attached to it. </i></p>
+	<p><i>TSO is a direct one-to-one relationship: One user, one address space.
+	</i></p>
+	<p><i>Because of this, even on a large MVS mainframe, TSO consumes far too
+	many finite resources to be a viable application platform for a large group
+	of users. This is why CICS followed on to TSO and became the dominant
+	teleprocessing monitor for heavy-duty, high volume business applications—it
+	is far less expensive in terms of machine utilization.</i></p>
+</blockquote>
+<p>So what about <i><b>KICKS</b></i>, trying to be a CICS environment running
+under TSO or CMS? </p>
+<p>Ideally <i><b>KICKS</b></i> provides a happy combination of the TSO/CMS and CICS
+worlds: </p>
+<ul>
+	<li>Each <i><b>KICKS</b></i> user runs in his own address space, so when an
+	application problem occurs it should only affect the user that is running
+	that application. </li>
+	<li>As <i><b>KICKS</b></i> applications use the CICS pseudo-conversational
+	model think time will normally result in the <i><b>KICKS</b></i> user’s TSO
+	address space being swapped out so it should consume minimum system memory.
+	</li>
+	<li><i><b>KICKS</b></i> has shared files open only between reading the input
+	terminal screen and writing the output terminal screen, so file contention
+	should be low. This also avoids the need for gigantic regions. </li>
+</ul>
+<p>The above advantages are also the seeds of the major limitations <i><b>KICKS</b></i>
+faces: </p>
+<ul>
+	<li>Memory swapping and file open/close processing are things CICS does
+	not do at all (at least on a transaction basis) – so <i><b>KICKS</b></i> is
+	automatically incurring per-transaction overhead way over what CICS has.
+	“Thousands of transactions per second” is never going to happen! </li>
+</ul>
+<p>Although <i><b>KICKS</b></i> now supports nearly all of the CICS command
+level programming api, a big <i><b>KICKS</b></i> advantage over CICS
+is freedom from the CICS api! If you don’t care about compatibility, techniques
+that would crash a CICS system will work very well in <b> <i>KICKS</i></b>. Some
+examples: </p>
+<ul>
+	<li>Need ISAM or BDAM files? Set them up in the COBOL program just as you
+	would for a batch job! (these files don't need to be defined in the <i><b>
+	KICKS</b></i> FCT, but remember to allocate and free them in your <b><i>
+	KICKS</i></b> startup clist).</li>
+	<li>Want to use the COBOL Sort? Set it up in the COBOL program just as you
+	would for a batch job! </li>
+	<li>Want to use the COBOL Report Writer for your reports? Set it up in the
+	COBOL program just as you would for a batch job!&nbsp; Or write the report
+	to a temporary file and then use the SPOOLOPEN api to write lines from the
+	temporary file to any printer for finer control.</li>
+	<li>Want to use the COBOL Report Writer for your screens? Same as using it
+	for a report, only write temporary file lines to the screen with SEND TEXT
+	(or define a map and use SEND MAP).</li>
+	<li>Need help figuring out where your program is going wrong? Of course KEDF
+	and its source trace
+	is probably the easiest way to do this, but there's no reason you can't use
+	COBOL's own DISPLAY, EXHIBIT or TRACE commands to track your program's
+	progress if you want to.</li>
+</ul>
+<h2>&nbsp;</h2>
+<h2><a name="AppendixB"></a>Appendix B – Frequently Asked Questions </h2>
+<p><u>Q. Where can I find manuals for the legacy COBOL compiler? </u></p>
+<blockquote>
+	<p>A. The manuals for the legacy COBOL compiler (360S-CB-545, 360S-LM-546) 
+	used in the MVS Turnkey and the VM/370 six pack, are <u>COBOL Manual</u> GC28-6396 and <u>COBOL Programmer’s Guide</u>
+GC28-6399. Both are on Bitsavers (<a href="http://bitsavers.trailing-edge.com/pdf/ibm/360/os/cobol/">bitsavers.trailing-edge.com/pdf/ibm/360/os/cobol</a>). Other than those manuals
+the best reference I’ve found is Jay Moseley’s &quot;Assembling, Compiling,
+Link-Editing, and Executing User-Written Programs&quot; page (<a target="_blank" href="http://www.jaymoseley.com/hercules/compiling/compile.htm">http://www.jaymoseley.com/hercules/compiling/compile.htm</a>).
+	</p>
+</blockquote>
+<p>&nbsp;</p>
+<p><u>Q. I’m using a ‘programmer generated’ symbolic map but it doesn’t
+work right </u></p>
+<blockquote>
+	<p>A. This might happen because your programmer generated symbolic map does
+	not match the symbolic map that <i><b>KICKS</b></i> generates. Check that
+	there are no missing or changed fields between the two. Older versions of <i>
+	<b>KICKS</b></i> did not support DSATTS/MAPATTS in the map generation and
+	instead changed them to EXTATT, resulting in more or fewer bytes in the
+	symbolic map than might otherwise be expected. <i><b>KICKS</b></i> now honors DSATTS/MAPATTS
+	and should produce symbolic maps fully compatible (in this respect) with
+	CICS.</p>
+	<p>&nbsp;</p>
+</blockquote>
+<p><u>Q. I’m getting enqueue timeouts (30 second pause, then AFCT/ADCT
+abend). </u></p>
+<blockquote>
+	<p>A. Also RESP=19, RESP2=99 if you are trapping errors. This is probably
+	due to a <b><i>KICKS</i></b> batch job or perhaps an online conversational
+	transaction holding on to a file for a long time, preventing other
+	transactions like yours from being able to access the file. Batch jobs and
+	conversational transactions should periodically release their files
+	(SYNCPOINT) to allow others to operate normally. </p>
+	<p>This can also be caused by someone using KEDF to debug a transaction that
+	uses the file your transaction is trying to access. KEDF freezes
+	transactions at each api call, so transactions that might ordinarily hold a
+	file for a fraction of a second can end up holding the file indefinitely
+	while a programmer is slowly stepping thru the code analyzing its progress.
+	The best cure for this problem is to insist programmers use a different set
+	of files for their debugging.</p>
+</blockquote>
+<p>&nbsp;</p>
+<p><u>Q. My printout of CRLP batch runs has a few characters that are different
+from what's shown here. </u></p>
+<blockquote>
+	<p>A. And/Or my screen displays show different (or even missing) characters
+	from what's shown here. These are symptoms of 'CODEPAGE' issues, translating
+	EBCDIC characters to ASCII characters on your printouts and/or tn3270
+	client. Under hercules you
+	should use &quot;CODEPAGE 819/1047&quot; in your hercules.conf file (the one you use
+	to start hercules, define all you disks &amp; termnals, etc). This should
+	fix printout problems. Making the same codepage selection for your tn3270
+	client should fix screen problems.</p>
+	<p>&nbsp;</p>
+</blockquote>
+<p><u>Q. I’m getting a VER1 abend. </u></p>
+<blockquote>
+	<p>A. VER1 abend means your program was not compiled for the current version
+	of <b><i>KICKS</i></b>. You should recompile it.</p>
+	<p>&nbsp;</p>
+</blockquote>
+<p><u>Q. I’m getting a VER2 abend. </u></p>
+<blockquote>
+	<p>A. VER2 abend also means your program was not compiled for the current
+	version of <b><i>KICKS</i></b>. You should recompile it. This abend usually
+	happens instead of a VER1 abend if you attempt to just relink your program
+	instead of compile and relink...</p>
+	<p>&nbsp;</p>
+</blockquote>
+<p><u>Q. I’m getting a VER3 abend. </u></p>
+<blockquote>
+	<p>A. VER3 abend might mean your program was not compiled for the current
+	version of <b><i>KICKS</i></b>, but usually means there is a problem with
+	your COBOL compile options. <i><b>KICKS</b></i> programs require that PIC
+	S9(4) COMP items be able to hold halfword numbers (ie, -32768 to + 32767),
+	so you must specify whatever compiler option does that on your machine.
+	Probably something like <u>NOTRUNC</u> or <u>TRUNC(BIN)</u> as seen in the
+	standard <i><b>KICKS</b></i> COBOL compile procs.</p>
+	<p>&nbsp;</p>
+</blockquote>
+<p><u>Q. I’m getting an ATCP
+abend. </u></p>
+<blockquote>
+	<p>A. Also RESP=222, RESP2=?? if you are trapping errors. This can happen
+	when you are using the &quot;FULLSCR&quot; version of TCP (2$) in TSO when
+	you do a SEND MAP (or SEND TEXT) and that results in an attempt to send
+	invalid characters to the terminal. TCP=2$ checks outbound
+	messages for characters (0x01,.0x02, 0x03, 0x04, 0x06, 0x14, 0x15, 0x16,
+	0x17, 0x24, 0x26, 0x37, and 0x3D) that would be filtered (turned into colons) by the TSO
+	&quot;tput fullscr&quot; macro, and if it finds any it produces this abend and aborts sending
+	the data to the terminal. RESP2 will be the offset from the beginning of the
+	message (which is displayed as the 'TIOA' in the formatted dump) to the
+	first invalid character.</p>
+	<p>This error is unique to the &quot;FULLSCR&quot; version of TCP (2$) used with older
+	distributions of the Tur(n)key MVS system. It is not generated with the &quot;NOEDIT&quot; version of TCP (1$)
+	always used in
+	z/OS, nor in any of the CMS versions of <i><b>KICKS</b></i>.</p>
+</blockquote>
+<p>&nbsp;</p>
+<p><u>Q. My application can't lock the keyboard. </u></p>
+<blockquote>
+	<p>A. Older version of <i><b>KICKS</b></i> always unlocked the keyboard
+	regardless of the application specification (ie, FREEKB), but more current
+	version of <i><b>KICKS</b></i> honor (by default) the application
+	specification. To revert to the older behavior set the SIT parameter FFREEKB=YES.</p>
+	<p>A. The TSO tput macro, as used by the &quot;FULLSCR&quot; version of TCP (2$, 
+	default in legacy MVS) in TSO , ignores the
+	FREEKB bit in the 3270 WCC and always unlocks the keyboard. To obtain
+	keyboard lock functionality in the TSO version of <i><b>KICKS</b></i> you
+	must use the &quot;NOEDIT&quot; version of TCP (1$, which is the default in 
+	z/OS).</p>
+	<p>This does not apply to CMS; all
+	CMS version of the terminal driver support keyboard lock.</p>
+</blockquote>
+<p>&nbsp;</p>
+<p><u>Q. I’m getting a &quot;Alternate 3270 screen &gt; 4095 chars, ignoring&quot; startup
+message. </u></p>
+<blockquote>
+	<p>A. The TSO tput macro, as used by the &quot;FULLSCR&quot; version of TCP (2$, 
+	default in legacy MVS), can only use 12 bit sba's due to its inability to use certain characters
+	that might occur using 14 bit sba's. This limits its maximum screen size to
+	4095 characters. To work with larger screens in the TSO version of <i><b>KICKS</b></i> you
+	must use the &quot;NOEDIT&quot; version of TCP (1$, which is the default in 
+	z/OS).</p>
+	<p>This does not apply to CMS;
+	all CMS version of the terminal driver support large screens.</p>
+</blockquote>
+<p>&nbsp;</p>
+<p><u>Q. Can <i><b>KICKS</b></i> share VSAM files with CICS?</u></p>
+<blockquote>
+	<p>A. No. <i><b>KICKS</b></i> VSAM file sharing works by opening and closing
+files as necessary. CICS does not close files until explicitly asked to, so once
+CICS has opened the file (usually when it starts, sometimes not until first use)
+	<i><b>KICKS</b></i> probably won't be able to get it. If it does get it (because
+the file's VSAM share options are defined to allow it) <u>that's a very bad
+thing</u>, since neither <i><b>KICKS</b></i> nor CICS will know the other is
+using the file...</p>
+	<p>Different versions of <b><i>KICKS</i></b> <u>can</u> share VSAM files
+	without issue. A older version with the current, or the free version with <font face="Times New Roman"> <i><b>KICKS<font color="#FF0000">pro</font></b></i></font>,
+	etc.</p>
+	<p>&nbsp;</p>
+</blockquote>
+<p><u>Q. Is <b> <i>KICKS </i></b>available in other languages? </u>
+</p>
+<blockquote>
+	<p>A. <i><b>KICKS</b></i> is localized for American English (en-US). If you 
+	translate some components to your own locale please upload your work to the 'files' area
+	in the support forum (
+	<a href="https://groups.yahoo.com/neo/groups/kicksfortso/info">
+	https://groups.yahoo.com/neo/groups/kicksfortso/info</a> ) so that others don't
+	need to reinvent the wheel. Thanks in advance!!</p>
+	<p>&nbsp;</p>
+</blockquote>
+<p><u>Q.&nbsp; DFHBMF?? is missing from KIKBMSCA</u></p>
+<blockquote>
+	<p>A. The DFHBMSCA copy member defines a number of useful 3270 attributes,
+	but by no means all of them. Even the member IBM distributes for CICS does
+	not cover all possibilities, and some find it's naming convention difficult.
+	The prevailing wisdom is to not use DFHBMSCA, but to code and use your own
+	attribute definition member with the names and combinations you like - or,
+	equivalently from my perspective, to use a 'shop standard' attribute
+	definition member. See for example
+	<a target="_blank" href="http://www.nwrdc.fsu.edu/mainframe/bms-attribute-names">http://www.nwrdc.fsu.edu/mainframe/bms-attribute-names</a>
+	or others you can easily find Googling DFHBMSCA. As such the BMSCA I supply
+	is just a starting point for your efforts if you don't have something
+	better. About the only time I add to it is if I need something for an
+	example program.</p>
+	<p>&nbsp;</p>
+</blockquote>
+<p><u>Q. Do paid licenses include &quot;support&quot;? </u>
+</p>
+<blockquote>
+	<p>A. I offer free basic support with all licenses, paid or otherwise. However,
+	recognizing that some customers require a higher level of support I offer
+	&quot;guaranteed response&quot; telephone and/or online support on a prepaid basis. If you
+	require
+	such support please contact me. </p>
+	<p>&nbsp;</p>
+</blockquote>
+
+
+
+<h2><a name="AppendixC"></a>&nbsp;Note - direct link to issues is <font size="3">
+<a target="_blank" href="http://www.kicksfortso.com/User's%20Guide%201.5.0/Issues.htm">
+http://www.kicksfortso.com/User's Guide 1.5.0/Issues.htm</a></font></h2>
+
+
+<!--KICKS v1r5m0 issues list -->
+
+<h2><span style="font-style: italic"><font size="6">KICKS</font></span> 1.5.0
+Issues List</h2>
+<p><b>TSO rawhide published 9/3/2014<br>
+</b><br>
+generated 9/3/14, <span style="background-color: #FFFF00">open</span><br>
+<span style="background-color: #00FFFF">1</span>. noticed the READY READY issue
+in z/OS. This is a long standing issue but not one I have seen previously except
+in legacy MVS with the tcp=1$ driver. What happens is that, now and then, after the
+colored 'KICKS is shutting down' message is shown you don't get the TSO ready
+prompt. When you press enter again you get two READY prompts (usually white, not
+red in legacy MVS). This does not happen with tcp=2$ or with any CMS tcp...<br>
+- can't reliably make the problem appear, so difficult to tell if attempted
+fixes work...<br>
+- maybe due to leaving 'strange' stuff on the screen (such as the SA orders
+associated with the shutting down message when <i><b>KICKS</b></i> ends.<br>
+- fix? -9/3/2014 - changed KSSFPGM to do a clear screen after 2 second delay after
+sending the colored shutdown mesage - so that the screen TSO sees will be
+totally blank.<br>
+** not the problem, 'fix' had no effect, issue remains<br>
+- maybe due to not doing a read after colored letter write? Noted on z/OS that
+the colored letters where not showing up!<br>
+- fix? -9/25/14 - changed KSSFPGM to do a 'check' after colored letters write.<br>
+** 10/4/2014&nbsp; <u>nope, not fixed</u> - READY READY appeared again (in
+legacy MVS).<br>
+- more info --&nbsp; 2/16/2015 can now reliably generate issue (on legacy MVS).
+Generating procedure does not
+generate ready-ready on z/OS, but does display possibly related issue in that
+the KB is not locked after clear. Also noticed that I need to use QWS to test
+this, as vista tn3270 seems to have a bug this procedure exposes ('short read'
+for enter aid following clear aid). Also confirmed my &quot;expected&quot; result is
+correct by trying in real CICS, and confirmed that it works properly in all CMS
+versions of <i><b>KICKS</b></i> (and, within driver limitations, with tcp=2$ in
+legacy MVS). At this point I'm testing to see if ready-ready may
+be related to <i><b>KICKS</b></i> being called, not a command processor. <br>
+<br>
+reported 9/3/14, fixed 9/4/14<br>
+<span style="background-color: #00FFFF">2</span>. KEBRPGM does not compile in
+z/OS
+due to compile diagnostic complaining about kik-aids1 being moved to a pointer
+type.<br>
+- this due to LOAD api (for KEBRHELP) generating code for 'move after' from
+kik-aids1 used (off label) for entry/set to a pointer.<br>
+- fix: updated KIKPPCOB (and PPGCC) to use given arg directly.<br>
+- also, while I was at it, updated PPCOB, PPGCC, KIKPCP1$, and KEDF to separate
+SET/ENTRY (now reporting both) and to make all LOAD args optional.<br>
+<br>
+reported 9/3/14 - resolved 9/5/14 - not a problem<br>
+<span style="background-color: #00FFFF">3</span>. IEC161I 020-054 abend (re
+SDBDATA) in TSO when trying to use source trace. (this is z/OS system) also &quot;1st startbr failed, resp=84, resp2=50&quot; message in kedf<br>
+- this is an 'out of memory' situation. What's the region (below the line) for
+the TSO session?<br>
+- resolved - 2m region, <i><b>KICKS</b></i> doc says min 4m<br>
+<br>
+reported 9/4/14, fixed 9/4/14<br>
+<span style="background-color: #00FFFF">4</span>. GCC test program LINKTST fails
+due to 'testcob3' not abending!<br>
+- this due to testcob3 not detecting condition to do FCP access to file NOFILE,
+thus not abending. This due to PPGCC generating bad code in the case of an api
+call directly following an if (ie, no preceding '{'), When that occurred PPGCC
+gened a {linenum} {api expansion}, meaning the api expansion would not be within
+the if as intended.<br>
+- fix: updated PPGCC to add another set of brackets so it looks like {{linenum}
+{api expansion}}<br>
+- also, while I was at it, updated PPGCC to turn (8) error for missing KIKEIB in
+main routine def into warning (4).<br>
+<br>
+reported 9/6/14 <span style="background-color: #FFFF99">queued to 1.5.1 release</span><br>
+<span style="background-color: #00FFFF">5</span> Some GOLD and PRO markup still
+exists.<br>
+- 1.5.0 is a 'PRO' version, but since that's the only kind there is now the GOLD
+&amp; PRO markup, thou still recognized, should be removed and when finally gone
+PPCOB and PPGCC should have their recognition of it removed as well.<br>
+<br>
+<b>CMS rawhide published 9/7/2014<br>
+</b><br>
+generated 9/9/14, fixed 9/9/14<br>
+<span style="background-color: #00FFFF">6</span> KUNLKED vrm wrong, so stamped
+in vrm in KIKENTRY is wrong for anything using it Most everything really...<br>
+- this is not vrm that is checked, except by eyeball, so it's ok in the rawhide,
+but needs fixing before another publish<br>
+- KUNLKED updated, fix will propagate next ADOALL...<br>
+<br>
+<b>TSO, source, and CMS rawhides published 9/22/2014<br>
+</b><br>
+generated 9/23/14, closed 9/28/14, all items addressed<br>
+<span style="background-color: #00FFFF">7</span> z/OS source install issues<br>
+NOTE - z/OS is not a &quot;supported&quot; build platform for <i><b>KICKS</b></i>,
+but since some may want to casually play with the source on z/OS it seemed best to address
+these issues by fixing them when easy, and by otherwise documenting them...<br>
+- source install does not support update to JCLLIB for z/OS fixed 9/25/14<br>
+- ADOALL jobs run out of order due to multiple initiators serving class A jobs.
+Need to fix to run right, or run one at a time instead of using ADOALL.<br>
+- added notes to ADOALL fixed 9/25/14 <br>
+- FB2VB, PARMINFO, PDSUPDTE &amp; KIKALI do not compile various JCL issues<br>
+- parminfo - not using proc, using mvt COBOL compiler<br>
+not gonna fix, not used in z/OS closed 9/25/14<br>
+- pdsupdt$ - using ASMFCL proc, doesn't work in z/OS<br>
+not gonna fix, used only in install, closed 9/25/14<br>
+- fb2vb - fixed 9/24/14<br>
+- kikali<br>
+not really a 'source' issue, but exposed in source testing...<br>
+fixed 9/25/14<br>
+- MUR &amp; TAC examples do not compile<br>
+- these should compile from .CB2 lib, not from .COB lib<br>
+added notes to ADOALL &amp; KIKSAMP fixed 9/25/14<br>
+- ASRB (ASRA, AICA) routine does not compile. also SIP won't<br>
+link due to missing ASRB routine<br>
+- jcl issue<br>
+fixed 9/25/14<br>
+- COB glue routine does not compile.<br>
+- jcl issue<br>
+fixed 9/25/14 by making it like GCC glue<br>
+- KEDFPGM compile fails<br>
+not really a 'source' issue, but exposed in source testing...<br>
+- bad PPCOB code gen, LOAD api expansion exceeds col 71<br>
+- result of issue 2 fix??<br>
+fixed 9/25/14<br>
+- KSDBLOAD compile fails<br>
+not really a 'source' issue, but exposed in source testing...<br>
+- cob2 doesn't like redefining 01 levels under FD<br>
+fixed 9/25/14<br>
+<br>
+reported 9/23/14, fixed 9/25/14<br>
+<span style="background-color: #00FFFF">8</span> z/OS install does not fully
+support userid/prefix/literal HLQ due to missing support in the 2nd level rexx
+($$V1R5M0) in the xmi.<br>
+- rewrote rexx to provide arguments allowing HLQ to be overridden.<br>
+- while I was at it I also provided ability to override volser.<br>
+<br>
+reported 9/26/14, fixed 9/26/14<br>
+<span style="background-color: #00FFFF">9</span> license does not address
+concern re LE/370 in distros leaving legacy (legacy MVS, VM/370) systems behind.<br>
+- added restriction to license against incompatible objects<br>
+<br>
+reported 9/27/14, fixed 9/27/14<br>
+<span style="background-color: #00FFFF">10</span> running test programs as part
+of ADOALL in source install takes to long for no purpose.<br>
+- made the last ADOALL step (running tests) optional<br>
+<br>
+reported 9/27/14, fixed 9/27/14<br>
+<span style="background-color: #00FFFF">11</span> tempstor, intrapartition
+queues, and source db not defined during CMS install. This due to not running
+LOADSYS in POSTVSAM exec.<br>
+- added LOADSYS to POSTVSAM<br>
+<br>
+<b>TSO, source, and CMS rawhides published 9/28/2014</b></p>
+<p>reported 9/30/14, fixed 9/30/14<br>
+<span style="background-color: #00FFFF">12</span> KEDF lines shown as green in
+User's Guide are always blue...<br>
+- some tn3270 clients enable 3270 base color mode, some don't. Most don't allow
+a choice! This is not an issue normally, but KEDF screens are really busy and losing the
+color separation of its screen areas when using a tn3270 client that does enable
+base color mode is not helpful.<br>
+- added attribute set into DOTOP to force green</p>
+<p>last minute change! 10/2/14, fixed 10/12/14 <br>
+<span style="background-color: #00FFFF">13</span> TSO version needs KICKS...SKIKLOAD
+in addition to KICKSSYS...SKIKLOAD (like CMS version already has). This to simplify user table maintenance for
+&quot;system install&quot; versions of <i><b>KICKS</b></i>.<br>
+- updated both clist &amp; exec to create user libs if not already present, and to
+incorporate into appropriate concatenations.
+<p>reported 10/3/14, fixed 10/3/14<br>
+<span style="background-color: #00FFFF">14</span> ksgmlic fails on mod 3 terms.
+This due to incorrect map select (switched mod 3 &amp; mod 4).<br>
+- corrected map select code.</p>
+<p>reported 10/7/14, fixed 10/9/14<br>
+<span style="background-color: #00FFFF">15</span> source trace compiles failing
+IEC020I 001-4. compile proc(s) jcl issue, possible mismatch of blocksizes in
+concatenation.<br>
+- fixed source trace compile procs.</p>
+
+<p>reported 10/9/14, fixed 10/9/14<br>
+<span style="background-color: #00FFFF">16</span> source trace reporting source
+date non-match when should report source not found. &quot;i16&quot; (used in startbr
+call) was short but should be int.<br>
+- made i16 int instead of short</p>
+
+<p>reported 10/10/14, fixed 10/10/14<br>
+<span style="background-color: #00FFFF">17</span> 'funny' chars in KEBRPGM
+source code. Actually just a few &quot;[&quot; and &quot;]&quot; characters mistranslated (more ind$file mess ups) in a couple of comments, but fixed anyway...</p>
+<p>reported 10/10/14 - resolved 10/13/14 - not a problem (but maybe worth a
+comment in doc or KooKbooK someplace)<br>
+<span style="background-color: #00FFFF">18</span>. KEDF source trace PF4 &quot;skip
+subroutine&quot; did not return. <br>
+- skip subroutine returns when the program gets to the next executable instruction,
+but that may not
+be the same as the next instruction the program executes! For example, consider</p>
+<blockquote>
+	IF blah blah THEN<br>
+	&nbsp;&nbsp;
+	PERFORM SKIP-THIS<br>
+    ELSE<br>
+	&nbsp;&nbsp;
+	PERFORM MARKS-THIS-AS-RETURN.<br>
+	PERFORM EXPECTED-RETURN-HERE.
+</blockquote>
+<p>if you were at &quot;PERFORM SKIP-THIS&quot; and pressed PF4 you might expect to return
+to &quot;PERFORM EXPECTED-RETURN-HERE&quot;, but KEDF sets up the temporary
+breakpoint at &quot;PERFORM MARKS-THIS-AS-RETURN&quot;, which is not hit so no &quot;return&quot; is
+apparent.<br>
+- working as designed!<br>
+- <i>possible enhancement: PF16 (shift PF4) to do &quot;set temp BP at current
+location (or
+cursor) and go&quot;</i>.</p>
+
+<p>reported 10/16/14, fixed 10/17/2014<br>
+<span style="background-color: #00FFFF">19</span> when using source trace, and
+no source is found, and a resp&lt;&gt;0 event occurs, the resp is not shown,
+which is confusing since the only reason for the break is the bad resp! This due
+to not calling api_resp before dobottom in those error cases in source_trace.<br>
+- added required api_resp calls.</p>
+
+<p>generated 10/20/14, <span style="background-color: #FFFF00">open</span><br>
+<span style="background-color: #00FFFF">20</span> this is to document some
+'rough edges' in the KEBR program..<br>
+- analyze-cursor sometime reports wrong when cursor on &quot;**bottom**&quot; or bottom
+ruler line of hex display<br>
+- repeated find sometimes does not switch directions properly<br>
+- need KooKbooK recipe for CICS install&nbsp; &#10003;(see issue 27)<br>
+- online help could be improved to show *all* commands instead of just those new
+or different from CEBR; also vget should note the vsam file name is as in the
+FCT (ie, its DDN), not as in its DSN.<br>
+- 'checksum' partially implemented to detect queue changed since last displayed;
+needs to be finished...<br>
+- find highlight could be improved. 'scroll to' highlighting a bit confusing<br>
+
+<p>reported 10/20/14, fixed 10/23/2014<br>
+<span style="background-color: #00FFFF">21</span> KEBR does not find short tdq/file
+names in get/vget if an optional argument is present<br>
+- changed to move only up to first space to tdq/file name</p>
+
+<p>reported 10/23/14, resolved 10/23/14 - not a problem<br>
+<span style="background-color: #00FFFF">22</span> some dates in the issues list
+are beyond the
+&quot;last updated date&quot; at the bottom of the page<br>- &quot;Last updated date&quot;
+refers to the Appendices document, but the issues list is a server side include
+and can change without the Appendices document changing. Added 'issues last
+updated' to bottom of the include...<br>
+
+<p>feature request 10/30/14, request declined 11/11/14<br>
+<span style="background-color: #00FFFF">24</span> show &quot;source listing not found&quot;
+message only once per program per task instead of for every source statement.<br>
+- really only an issue for a program that was compiled with source trace, but
+the source code database has since been reinitialized so the source is no longer
+available. Options: recompile (with or without source trace), switch to API mode
+(PF2), or just turn off
+source trace (PF13).<br>
+- 4/22/16 - changed 'SOURCE LISTING NOT FOUND' msg suffixing ', PRESS PF2 FOR API MODE'.<br>
+
+<p>
+<b>TSO, source, and CMS final (?) published 11/7/2014</b></p>
+
+
+
+
+<p>reported 11/9/14, resolved 11/9/14 - ** unpublished **<br>
+<span style="background-color: #00FFFF">25</span> On TK4- system, where <i><b>
+KICKS</b></i> &quot;system install&quot; done, tso source build ADOALL step ADO11 submitted jobs (LOADMUR, LOADTAC, LOADSDB, LOADTEMP, LOADINTR) fail due to RAKF issue, unable to delete vsam file(s).<br>
+- cause is that specific RAKF rules exist for these (system install use) files, and the default id
+associated with intrdr job isn't allowed to delete. Maybe not a big deal, since
+this step isn't actually necessary to the build; the files are already built in
+the course of the normal <i><b>KICKS</b></i> install.<br>
+- solution: delete step 11 since it is not necessary anyway<br>
+<p>observed 11/16/14, resolved 11/19/14 - ** unpublished **<br>
+<span style="background-color: #00FFFF">26</span> Syncpoint exit may foul up
+pseudo conversational tasks. Fixing this turned out to be one of those efforts
+that kept turning up mostly unrelated minor issues that also got fixed along the
+way, as noted.<br>
+- fixed KCP code calling exit to preserve calen &amp; nextran<br>
+- also noted and fixed related issue in PCP setting nextran<br>
+- also noted and fixed tempstor &amp; intrapartition queue 'empty startup' problem<br>
+- also upgraded SIP auxtrace to show more decoded trace entries<br>
+</p>
+
+<p>published 11/21/14<br>
+<span style="background-color: #00FFFF">27</span> KooKbooK recipe 15, &quot;Installing KEBR in real CICS&quot;<br>
+</p>
+<p>generated 11/22/14 <span style="background-color: #FFFF00">open</span><br>
+<span style="background-color: #00FFFF">28</span> status of KooKbooK updates (1-14)<br>
+- 1 - Designing and implementing simple BMS maps<b> - </b>republished 11/19/2014<br>
+- 2 - Designing and implementing simple KICKS COBOL programs<b> - </b>
+republished 11/21/2014<br>
+- 3 - Designing and implementing simple KICKS COBOL programs, part II<b> - </b>republished 11/22/2014<br>
+- 4 - Run Away Task!<b> - </b>republished 11/23/2014<br>
+- 5 - Designing and implementing simple
+<span style="font-size: 12pt; line-height: 115%">KICKS COBOL programs, part III<b>
+- </b></span>republished 12/06/2014<br>
+- 6 - 251 project – Scripting 3270 apps with open source tools ( I )<b> - </b>
+<span style="font-size: 12pt; line-height: 115%"><b>
+&nbsp;</b></span>republished 12/30/2014<br>
+- 7 - 251 project – Scripting 3270 apps with open source tools ( II )<b> - </b>&nbsp;republished
+1/16/2015<br>
+- 8 - 251 project – Resource Definition ( I )<b> - </b>&nbsp;republished
+1/17/2015<br>
+- 9 - 251 project – Resource Definition ( II )<b> - </b>&nbsp;republished
+1/18/2015<br>
+- 10 - 251 project – Workload &amp; Final Project Wrap Up<b> - </b>&nbsp;republished
+1/19/2015<br>
+- 11 - Designing and implementing simple KICKS GCCMVS programs<b> - </b>&nbsp;republished
+2/3/2015<br>
+- 12 - Using Alternate 3270 screen sizes in COBOL and GCCMVS programs<b> -&nbsp; </b>republished
+11/23/2015<br>
+- 13 - Using DB2 with KICKS (reformat only,<span style="background-color: #FFFF99"> content update</span><b><span style="background-color: #FFFF99">
+</span> </b><span style="background-color: #FFFF99">queued to
+1.5.1 release</span>) - <br>
+- 14 - VSAM in the&nbsp;VM/370
+SixPack (1.2) system<b> -&nbsp; </b>
+</p>
+
+<p>pending change 11/22/14 <span style="background-color: #FFFF99">queued to
+1.5.1 release</span><br>
+<span style="background-color: #00FFFF">29</span> improve tempstor, intra queue
+sharing<br>
+&nbsp;&nbsp;&nbsp;&nbsp; a. change FCP close so that, in CMS, rel/det happens after last open file is closed<br>
+&nbsp;&nbsp;&nbsp;&nbsp; b. close tempstor, intra on conversational read even if pct entry says files stay open<br>
+</p>
+
+<p>reported 11/26/14 <span style="background-color: #FFFF00">open</span><br>
+<span style="background-color: #00FFFF">30</span> PDSman.xls does not handle
+member aliases. This utility is not distributed with <i><b>KICKS</b></i>, but it
+is something I've posted to the <i><b>KICKS </b></i>web site so I will
+fix this sooner or later. Since no <i><b>KICKS </b></i>distribution datasets
+contain aliases it's not a high priority...</p>
+
+<p>feature request 11/30/14 <span style="background-color: #FFFF99">queued to
+1.5.1 release</span><br>
+<span style="background-color: #00FFFF">31</span> Claim is <i><b>KICKS</b></i> already
+'does' IRC, it just doesn't name it. This request is to support, for
+compatibility, specification of SYSID in api calls. Such calls would be
+execution time comments, but since files/queues are (or can be) shared, the
+result is the same as if 'real' IRC was happening. Request prompted by desire to
+add IRC to KEBR for use in real CICS.<br>
+- looks like a good idea, may need further research and definition<br>
+
+<p>pending change 12/16/14 <span style="background-color: #FFFF99">queued to
+1.5.1 release</span><br>
+<span style="background-color: #00FFFF">32</span> improve trace, auxtrace &amp; kedf
+trace by adding eibline &amp; eibprog to each trace entry (internal entry size will
+go from 16 to 32). This may also allow backward lookup (how you got here) at a
+source trace breakpoint...<br>
+
+<p>pending change 12/31/14 <span style="background-color: #FFFF00">open</span><br>
+<span style="background-color: #00FFFF">33</span> update User's Guide Install
+section for TK4- update 6, 7.<br>
+- also do more clean up of the whole install section...
+
+<p>observed 1/5/15, resolved 1/6/15 - ** unpublished **<br>
+<span style="background-color: #00FFFF">34</span> noticed that VRM checking
+apparently systematically (but accidentally!) removed from the suffixed
+management modules, needs to get put back...</p>
+
+
+
+
+<p>observed 2/6/15, fixed 8/8/2015 - ** unpublished **<br>
+<span style="background-color: #00FFFF">35</span> directly returning current
+comm-area does not work. Usual code is to move it to working storage, change in
+working storage as needed, then return the working storage copy. But fails if
+RETURN TRANSID(EIBTRNID) COMMAREA(INPUT-COMM) LENGTH(EIBCALEN)<br>
+- because INPUT-COMM is cleared before it's moved to itself...<br>
+- changed to clear remaining after move...</p>
+
+
+
+
+<p>reported 2/6/15, resolved 2/10/15 - ** unpublished **<br>
+<span style="background-color: #00FFFF">36</span> use of SYSALLDA in legacy MVS
+install procedures causes install job failures when the allocation
+occurs onto a pack without sufficient space. <br>
+- changed GETXMI &amp; RCVKICKS (install instructions) and V1R5M0 (in BIGPDS
+install library) jcl to
+specify SYSDA instead of SYSALLDA.
+</p>
+
+
+
+
+
+<p>last minute change! 2/15/15&nbsp; - ** unpublished **<br>
+<span style="background-color: #00FFFF">37</span> While working on&nbsp; issue
+#1 (ready-ready) I made a temporary change to ACP to un-suppress normally
+suppressed transaction dumps when intense tracing is active. Having decided this
+is a worthwhile change I've decided to make it permanent.
+
+
+
+
+
+<p>last minute change! 5/8/15&nbsp; - ** unpublished **<br>
+<span style="background-color: #00FFFF">38</span> Minor license revision; Under
+USE, authorized users to &quot;agree to&quot; as well as &quot;not violate&quot; terms.<p>
+reported 5/13/15,&nbsp; fixed 8/7/15 - ** unpublished **<br>
+<span style="background-color: #00FFFF">39</span> screen shots in 'examples'
+part of user's guide missing.<p>generated 5/17/15 <span style="background-color: #FFFF00">open</span>&nbsp; <br>
+<span style="background-color: #00FFFF">40</span> TS QUEUE and QNAME arguments
+(for DELETEQ, READQ, WRITEQ) need additional clarification in their API
+description to state QUEUE expects 8 characters of name, and QNAME expects 16
+characters of name. Either will be right padded with spaces to make 16
+characters. Names in the queue itself are always 16 characters..</p><p>
+reported 12/18/15,&nbsp; fixed 12/18/15 - ** unpublished **<br>
+<span style="background-color: #00FFFF">41</span> Install fails with &quot;IKJ56221I
+VOLUME ...&quot; message trying to install KICKS (or KICKS source) onto specific
+volume in z/os.<br>
+- happens when&nbsp;volume specified isn't part of the default volume group.
+Fixed by adding 'UNIT(SYSALLDA)' to allocation in $$V1R5M0 rexx.<p>
+reported 5/4/16,&nbsp; fixed 6/26/16<br>
+<span style="background-color: #00FFFF">42</span> license does not address
+transfer.<br>
+- added 'non-transferable' to free license grant.<p>
+reported 5/14/16,&nbsp; fixed 6/26/16 - ** unpublished **<br>
+<span style="background-color: #00FFFF">43</span> Cobol preprocessor with source
+trace option generates bad code when using as a pre step for a DB2 program.<br>
+- 'exec sql' block must not have trace statements inserted!<p>
+feature request 7/1/16 <span style="background-color: #FFFF99">queued to
+1.5.1 release</span><br>
+<span style="background-color: #00FFFF">44</span> Would be helpful if SPOOLOPEN
+supported nocc/asa/mcc options for carriage control..<br>
+- nocc is what it's doing now, but some 'printables' (like KEBR help) have asa
+control.<br>
+
+- looks like a good idea, may need further research and definition (re
+additional options beyond those mentioned)<p>
+reported 8/14/16,&nbsp; fixed 8/20/16 - ** unpublished **<br>
+<span style="background-color: #00FFFF">45</span> Compiling for 'no KEDF' does
+not work in TSO, program still traps into KEDF when it's turned on.&nbsp; Works
+in CMS.<br>
+- fix for issue 7 introduced new bug KIKCOBGX same as KIKCOBGL! Replaced 'undef
+DOEDF' for KIKCOBGX compile (like in CMS).
+<br>
+- added 'with source trace' to KEDFPGM 'on/s' response while fixing this.<p>
+reported 3/21/17 <span style="background-color: #FFFF00">open</span>&nbsp; <br>
+<span style="background-color: #00FFFF">46</span> CONDITION(s) in HANDLE
+CONDITION (etal) should be documented in Users Guide, rather than just saying
+they are the same as DFHRESP (which is itself undocumented in Users Guide).<br>
+
+<p>
+feature request 4/1/17 <span style="background-color: #FFFF99">queued to
+1.5.1 release (or later)</span><br>
+<span style="background-color: #00FFFF">47</span> Would be helpful if RETURN
+TRANSID
+supported IMMEDIATE option..<br>
+- helpful in a db2 environment.<br>
+
+- might be a good idea, needs further research, especially wrt INPUTMSG.
+
+<p>
+reported 7/30/17 <span style="background-color: #FFFF00">open</span>&nbsp; <br>
+<span style="background-color: #00FFFF">48</span> 0C1 abend in batch KICKS 
+following install of v8 TK4-.<br>
+- circumvention: add LDMOD S37X to tk4-.cnf to restore 37x opcodes...<br>
+- long term: need to change the way KICKS detects 31 bit capable/zos...<p>
+<font size="2">issues last updated 11/23/2019</font></p>
+
+<a name="AppendixC-end"></a>
+
+
+<hr>
+<font size="3">Copyright <font face="Times New Roman">© Mike Noel, 2008-2015;
+</font></font>last updated 8/11/2015
+</body></html>
