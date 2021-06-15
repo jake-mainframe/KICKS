@@ -4,7 +4,7 @@ KICKS is an enhancement for CMS & TSO on IBM mainframes (or emulators) that lets
 
 ## Install
 
-On SYSGEN MVS clone this repository to the `SOFTWARE` folder and then in TOS run `INSTALL KICKS`.
+On SYSGEN MVS clone this repository to the `SOFTWARE` folder and then in TSO run `INSTALL KICKS`.
 
 All KICKS programs and files have the `KICKS.` high level qualifier (HLQ).
 
@@ -16,7 +16,7 @@ Read http://www.kicksfortso.com/ for more information about KICKS for TSO.
 
 ## Included Demos
 
-KICKS comes with multiple different demo transactions. Installing these demo transactions is not required to run KICKS but provides an interesting example.
+KICKS comes with multiple different demo transactions. Installing these demo transactions is not required to run KICKS but provides an interesting examples.
 
 To install first you need to edit the JCL located in the PDS `KICKS.KICKS.V1R5M0.INSTLIB`.
 
@@ -40,3 +40,4 @@ From: `//TACDATA JOB  CLASS=C,MSGCLASS=A,MSGLEVEL=(1,1)`
 
 To: `//TACDATA JOB (JOB),'Demo',CLASS=A,MSGCLASS=A,MSGLEVEL=(1,1)`
 
+After changing the jobcard submit each job and the example KICKS transactions should be available.
