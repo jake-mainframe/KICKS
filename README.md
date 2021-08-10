@@ -18,26 +18,10 @@ Read http://www.kicksfortso.com/ for more information about KICKS for TSO.
 
 KICKS comes with multiple different demo transactions. Installing these demo transactions is not required to run KICKS but provides an interesting examples.
 
-To install first you need to edit the JCL located in the PDS `KICKS.KICKS.V1R5M0.INSTLIB`.
-
-For each job change the jobcard to add `(JOB),'Demo',` and change the CLASS to `A`.
+These Demos are installed 
 
 **Murach**
 
-From: `//MURACH JOB  CLASS=C,MSGCLASS=A,MSGLEVEL=(1,1),REGION=1024K`
-
-To: `//MURACH JOB (JOB),'Demo',CLASS=A,MSGCLASS=A,REGION=1024K`
-
 **SDB**
 
-From: `//LOADSDB JOB CLASS=C,MSGCLASS=A,MSGLEVEL=(1,1),REGION=1024K`
-
-To: `//LOADSDB JOB (JOB),'Demo',CLASS=A,MSGCLASS=A,REGION=1024K`
-
 **TAC**
-
-From: `//TACDATA JOB  CLASS=C,MSGCLASS=A,MSGLEVEL=(1,1)`
-
-To: `//TACDATA JOB (JOB),'Demo',CLASS=A,MSGCLASS=A,MSGLEVEL=(1,1)`
-
-After changing the jobcard submit each job and the example KICKS transactions should be available.
